@@ -47,8 +47,12 @@ names(x_train) <- features[,2]
 y_test_desc <- merge(y_test, activity_labels, by.x="V1", by.y="V1", all=TRUE)
 y_train_desc <- merge(y_train, activity_labels, by.x="V1", by.y="V1", all=TRUE)
 
-
+subject <- rbind(subject_test, subject_train)
+names(subject) <- c("subject")
 all_X_Data <- rbind(x_test, x_train)
 all_Y_Data <- rbind(y_test_desc, y_train_desc )
+names(all_Y_Data) <- c("id", "activity")
 
-allData <- cbind( all_Y_Data[,2], all_X_Data)
+allData <- cbind( subject, all_Y_Data$activity, all_X_Data)
+
+write.table(allData, 'extractedData.txt', sep='\t')
